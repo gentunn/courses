@@ -38,7 +38,7 @@ public class CourseController {
        model.addAttribute("courses", repository.findAll());
        return "index";
    }
-   
+   /* REST*/
    @RequestMapping(value="/courses", method = RequestMethod.GET)
   public @ResponseBody List<Course> courseListRest() {	
        return (List<Course>) repository.findAll();
@@ -55,6 +55,9 @@ public class CourseController {
    public @ResponseBody List<Comment> cmtListRest() {	
         return (List<Comment>) cmtrepository.findAll();
     } 
+   //////////
+   //*add courses, assignments, comments*/
+   ///add /view for easier redirect
    @PreAuthorize("hasAuthority('ADMIN')")
    @RequestMapping(value = "/add")
    public String addCourse(Model model){
@@ -75,7 +78,9 @@ public class CourseController {
    	model.addAttribute("comment", new Comment());
        return "addCmt";
    }
-
+/////////////
+   
+   
    @RequestMapping(value = "/view/{id}")
    public String viewCourse(@PathVariable("id") Long courseid,  Model model) {
 	   	model.addAttribute("course", repository.findOne(courseid));
@@ -88,8 +93,10 @@ public class CourseController {
    
   @RequestMapping(value="/courses/{id}", method = RequestMethod.GET)
    public @ResponseBody Course findCourseRest(@PathVariable("id") Long id) {	
-   	return repository.findOne(id);      //findOne() undefined
+   	return repository.findOne(id);      //findOne() undefined, downgrade spring to 1.5 works
    } 
+  
+  /// Saving courses, assgs, cmts
  
    @RequestMapping(value = "/save", method = RequestMethod.POST)
    public String save(Course course){
@@ -107,11 +114,13 @@ public class CourseController {
        cmtrepository.save(comment);
        return "redirect:/view/" + comment.getCourse().getId();
    }
-
+//////////
+   
+   //delete
    @PreAuthorize("hasAuthority('ADMIN')")
    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
    public String deleteCourse(@PathVariable("id") Long courseid, Model model) {
-   	repository.delete(courseid); //cant do delete(Long courseid) why?
+   	repository.delete(courseid); //cant do delete(Long courseid) why? downgrade
   	 return "redirect:../index";
    }
    @PreAuthorize("hasAuthority('ADMIN')")
@@ -121,7 +130,7 @@ public class CourseController {
    	arepository.delete(assgid); 
    	return "redirect:/view/" + dummy;
    }
-   
+  
 
    @RequestMapping(value = "/deleteCmt/{id}", method = RequestMethod.GET)
    public String deleteCmt(@PathVariable("id") Long cmtid, Model model) {
@@ -129,7 +138,7 @@ public class CourseController {
    	cmtrepository.delete(cmtid); 
    	return "redirect:/view/" + dummy;
    }
-   
+   /////
    
    @PreAuthorize("hasAuthority('ADMIN')")
    @RequestMapping(value = "/edit/{id}")

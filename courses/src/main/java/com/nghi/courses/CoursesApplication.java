@@ -21,7 +21,7 @@ public class CoursesApplication {
 	@Bean
 	public CommandLineRunner courseInitial(CoursesRepository corepository, CategoryRepository crepository, AssignmentsRepository arepository, UserRepository urepository, CommentRepository cmtrepository) {
 		return (args) -> {
-			/*Category cata1 = new Category("Front-end");
+			/*Category cata1 = new Category("Front-end");                   /// moved data to data.sql in resources
 			Category cata2 = new Category("Back-end");
 			crepository.save(cata1);
 			crepository.save(cata2);

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+
+
+<head>
+<title>Course edit</title>
+</head>
+<body>
+<div class="container">
+	<h1>Edit course</h1>
+	<div>
+		<form th:object="${course}" th:action="@{../save}" action="#" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+			<input type="hidden" id="title" th:field="*{id}" />
+			<div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+			<label for="name">Name</label>
+				<input class="form-control" type="text" id="title" th:field="*{name}" />
+				  </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+			<label for="source">Source</label>
+				<input class="form-control" type="text" id="source" th:field="*{source}" />
+					</div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+			<label for="year">Year</label>
+				<input class="form-control" type="number" th:field="*{year}" />
+					</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                    <label for="category">Category</label>
+			 <select id="category" th:field="*{category}" class="form-control">
+       			<option th:each="category: ${categories}" th:value="${category.categoryId}" th:text="${category.name}"></option>
+    		</select>
+    				</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+			<label for="grades">Grades</label>
+				<input class="form-control" type="text" th:field="*{grades}" />
+					</div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+			<label for="description">Description</label>
+				<input class="form-control" type="text" th:field="*{description}" />
+			<div style="clear: both; display: block; height: 10px;"></div>	
+			</div>
+                </div>
+                </div>
+				<input type="submit" value="Save" class="btn btn-success"></input>
+		</form>
+		
+	</div>
+</div>		
+	
+	
+	
+	
+</body>
+</html>

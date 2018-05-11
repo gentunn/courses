@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+
+<head>
+<title>Add comment</title>
+</head>
+<body>
+<div class="container">
+	<h1>Add comment</h1>
+	<div>
+	
+		<form th:object="${comment}" th:action="@{/saveCmt/{id}(id=${course.id})}" action="#" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+			 <div class="row">
+              
+                <div class="col-12">
+                    <div class="form-group">
+			<label for="cmt">Type here</label>
+				<input id="cmt" class="form-control" type="text" th:field="*{name}" />
+				</div>
+                </div>
+               </div>
+               
+			<div  style="display: none;">
+			<select id="course" th:field="*{course}" class="form-control">
+       			<option th:each="course: ${course}" th:value="${course.id}" th:text="${course.name}"></option>
+    		</select>
+    		</div>
+			<div style="clear: both; display: block; height: 10px;"></div>	
+				<input type="submit" value="Save" class="btn btn-success" ></input>
+		</form>
+	</div>
+</div>		
+	
+	
+	
+	
+</body>
+</html>

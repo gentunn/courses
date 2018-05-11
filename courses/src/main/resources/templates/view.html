@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+
+<head>
+<title th:text="${course.name}"></title>
+</head>
+<body>
+<div class="container">
+	<h1 th:text="'View ' +${course.name}"></h1>
+	<div style="clear: both; display: block; height: 30px;"></div>
+	<div class="col-12">
+			<p th:text="'Name: ' +${course.name}"></p>
+			<p th:text="'Source: ' +${course.source}"></p>
+			<p th:text="'Year: ' +${course.year}"></p>
+			<p th:text="'Category: ' +${course.category.name}"></p>
+			<p th:text="'Grades: ' +${course.grades}"></p>
+			<p th:text="'Description: ' +${course.description}"></p>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<form th:object="${course}" sec:authorize="hasAuthority('ADMIN')">
+  			<button th:formaction="@{/view/addassignment/{id}(id=${course.id})}" class="btn btn-info">Add assignment</button>
+			</form>
+			
+
+			
+			<div style="clear: both; display: block; height: 10px;"></div>
+			 <table class="table table-striped">
+			 	<tr>
+		   			 <th>Assignment</th>
+		   			 <th>Link</th>
+		   			 <th sec:authorize="hasRole('ADMIN')"></th>
+				</tr>  
+				
+				<tr th:each = "assignment : ${course.assignments}">
+					<td th:text="${assignment.name}"></td>
+					<td>
+      					<a th:href="@{${assignment.link}}" th:text="${assignment.link}"></a>
+    				</td>
+    				
+    				<td sec:authorize="hasAuthority('ADMIN')">
+  			 			<form style="float: right;">
+  							<button th:formaction="@{/deleteAssg/{id}(id=${assignment.id})}" class="btn btn-danger">Delete Assignment</button>
+						</form>
+  					</td>
+				</tr>
+				
+			 </table>
+			 
+			 
+	</div>	
+			<div style="float: left;">
+			<form sec:authorize="hasAuthority('ADMIN')">
+  			<button th:formaction="@{/edit/{id}(id=${course.id})}" class="btn btn-success">Edit Course</button>
+  			</form>
+  			<div style="clear: both; display: block; height: 10px;"></div>	
+  			<form>
+  			<button th:formaction="@{/index}" class="btn btn-primary">Return</button>
+  			</form>
+  			</div>
+  			<div style="clear: both; display: block; height: 10px;"></div>
+  			
+  			<div style="float: right;">
+  			 <form sec:authorize="hasAuthority('ADMIN')">
+  			<button th:formaction="@{/delete/{id}(id=${course.id})}" class="btn btn-danger">Delete Course</button>	
+			</form>		
+			</div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+					
+			
+
+			
+			<div style="clear: both; display: block; height: 10px;"></div>
+			
+				<table class="table table-striped">
+			 	<tr>
+		   			 <th>Comment</th>
+		   			 <th></th>
+				</tr>  
+				
+				<tr th:each = "comment : ${course.comments}">
+					<td th:text="${comment.name}"></td>
+    				
+    				<td >
+  			 			<form style="float: right;">
+  							<button th:formaction="@{/deleteCmt/{id}(id=${comment.id})}" class="btn btn-danger">Delete Comment</button>
+						</form>
+  					</td>
+				</tr>
+				
+			 </table>
+			
+			<form th:object="${course}">
+  			<button th:formaction="@{/view/addCmt/{id}(id=${course.id})}" class="btn btn-info">Add comment</button>
+			</form>
+			
+			
+			
+  			
+</div>		
+	
+	
+	
+	
+</body>
+</html>
